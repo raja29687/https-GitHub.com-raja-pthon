@@ -1,0 +1,22 @@
+import pandas as pd
+import numpy as np
+data = pd.read_csv("S:\DL lab\8thdata.csv")
+print(data, "\n")
+d = np.array(data)[:, :-1]
+print("\nThe attributes are: ", d)
+target = np.array(data)[:, -1]
+print("\nThe target is: ", target)
+def train(c, t):
+    # Initialize the specific hypothesis
+    specific_hypothesis = c[0].copy()
+    for i, val in enumerate(t):
+        if val == "Yes":
+            specific_hypothesis = c[i].copy()
+            break
+    for i, val in enumerate(c):
+        if t[i] == "No":
+            for x in range(len(specific_hypothesis)):
+                if val[x] != specific_hypothesis[x]:
+                    specific_hypothesis[x] = '?'
+        return specific_hypothesis
+print("\nThe final hypothesis is:", train(d, target))
