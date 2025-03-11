@@ -1,0 +1,30 @@
+import numpy as np
+def sigmoid(x):
+ return 1 / (1 + np.exp(-x))
+def sigmoid_derivative(x):
+ return x * (1 - x)
+words = ['cat', 'dog', 'elephant', 'apple', 'banana']
+word_lengths = np.array([len(word) for word in words]) / max([len(word) for word in words])
+targets = np.array([[1, 0, 0], [1, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 0]])
+input_size, hidden_size, output_size = 1, 5, 3
+learning_rate, epochs = 0.1, 10000
+# Initialize Weights
+np.random.seed(42)
+weights_input_hidden = np.random.rand(input_size, hidden_size)
+weights_hidden_output = np.random.rand(hidden_size, output_size)
+for epoch in range(epochs):
+ hidden_output = sigmoid(np.dot(word_lengths.reshape(-1, 1), weights_input_hidden))
+ final_output = sigmoid(np.dot(hidden_output, weights_hidden_output))
+ error = targets - final_output
+ d_output = error * sigmoid_derivative(final_output)
+ d_hidden = np.dot(d_output, weights_hidden_output.T) * sigmoid_derivative(hidden_output)
+ weights_hidden_output += np.dot(hidden_output.T, d_output) * learning_rate
+ weights_input_hidden += np.dot(word_lengths.reshape(-1, 1).T, d_hidden) * learning_rate
+ if epoch % 1000 == 0:
+ print(f"Epoch {epoch}, MSE: {np.mean(np.square(error)):.4f}")
+hidden_output = sigmoid(np.dot(word_lengths.reshape(-1, 1), weights_input_hidden))
+U22CA6P6 DEEP LEARNING LAB 3 BCA-D
+final_output = sigmoid(np.dot(hidden_output, weights_hidden_output))
+for i, word in enumerate(words):
+ print(f"Word: {word}, Predicted Class: {np.argmax(final_output[i])}, Expected:
+{np.argmax(targets[i])}")
