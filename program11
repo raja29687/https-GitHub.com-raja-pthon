@@ -1,0 +1,27 @@
+pg 11
+
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score
+def train_and_evaluate(X, y, test_size=0.33):
+ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
+ classifier = GaussianNB().fit(X_train, y_train)
+ y_pred = classifier.predict(X_test)
+ accuracy = accuracy_score(y_test, y_pred)
+ return accuracy, y_pred, y_test, classifier
+X1 = np.array([[1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7]])
+y1 = np.array([0, 0, 1, 1, 1, 0])
+accuracy1, y_pred1, y_test1, classifier1 = train_and_evaluate(X1, y1)
+print(f"Accuracy on first dataset: {accuracy1 * 100:.2f}%")
+print("Predicted labels:", y_pred1)
+print("Actual labels:", y_test1)
+X2 = np.array([[1, 20], [2, 21], [3, 22], [4, 23], [5, 24], [6, 25], [7, 26], [8, 27], [9, 28], [10, 29]])
+y2 = np.array([0, 0, 0, 1, 1, 1, 1, 1, 0, 0])
+accuracy2, y_pred2, y_test2, classifier2 = train_and_evaluate(X2, y2, test_size=0.2)
+print(f"Accuracy on second dataset: {accuracy2 * 100:.2f}%")
+print("Predicted labels:", y_pred2)
+print("Actual labels:", y_test2)
+new_sample = np.array([[5, 25]])
+new_prediction = classifier2.predict(new_sample)
+print("Classification of new sample:", new_prediction)
