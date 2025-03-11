@@ -1,0 +1,27 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+data={
+    'Age':[30,35,40,45,50,55,60,65,70,75],
+    'Income':[250,300,350,400,450,500,550,600,650,700]
+}
+dataframe = pd.DataFrame(data)
+age = dataframe['Age']
+income = dataframe['Income']
+num = np.size(age)
+mean_age = np.mean(age)
+mean_income = np.mean(income)
+CD_ageincome = np.sum(income * age)-num * mean_income * mean_age
+CD_ageage = np.sum(age*age)-num * mean_age * mean_age
+b3 = CD_ageincome / CD_ageage
+b2 = mean_income - b3*mean_age
+print("Estimated coefficients :")
+print("b2=",b2,"\n b3=",b3)
+plt.scatter(age,income,color = "b",marker="o")
+response_vec = b2+b3*age
+plt.plot(age,response_vec,color="r")
+plt.xlabel('Age')
+plt.ylabel('Income')
+plt.title(' Age vs Income ')
+plt.legend()
+plt.show()
