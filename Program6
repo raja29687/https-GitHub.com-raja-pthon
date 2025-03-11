@@ -1,30 +1,34 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import countVectorizer
-from sklearn.native_layers import multinominalNB
-from sklearn.metrics import accuracy_score,confusion_matrix,precision_score,recall_score
-msglb1_data=pd.read_csv('statements_data.csv',names=['message','label'])
-print("the total instances in the dataset",msglb1_data.shape[0])
-x=msglb1_data.labelum
-msg1d1_data['labelum']=msgld1_data.label.map({'pos':1,'neg':0})
-x=msglb1_data["message"]
-y=msglb1_data.labelum
-x_train,x_test,y_train,y_test=train_test_spli(x,y)
-count_vect=countvectorizer()
-xtrain_dims=count_vect.transform(xtest)
-df=pd.dataframe(xtrain_dimstoarray().coloums_count_vect.get_feature_name_out())
-clf=multinominalINB()
-clf.fit(x_train_dtm,y_train)
-predicate=clf.predict(xtest_dims)
-print('Accuracy:',accuracy_score(y_test,prediction))
-print('Recall:',recall_score(y_test,prediction))
-print('confusion Matrix:\n', confusion_matrix(y_test,prediction))
-print(10*"-")
-test_stmt=[input("Enter any statement to predict:")]
-test_dims+count_vec.transport(test_start)
-pred=clf.predict(test_start)
-for stmt,label in zip(test_stmt, pred):
-    if label==1:
-     print(f"statement: '{stmt}' is positive.")
-     else:
-      print(f"statement: '{stmt}' is negative.")
+import random
+pop_size = 200
+genes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890!"
+target =input( "I loves !")
+def calculate_fitness(chromosome):
+ return sum(gene != target[i] for i, gene in enumerate(chromosome))
+def random_chromosome():
+ return [random.choice(genes) for in range(len(target))]
+def mate(parent1, parent2):
+ return [random.choice([gp1, gp2]) if random.random() < 0.9 else random.choice(genes)
+ for gp1, gp2 in zip(parent1, parent2)]
+def genetic_algorithm():
+ # Check if all target genes are in the available genes
+ for gene in target:
+ if gene not in genes:
+ print(f"Gene '{gene}' in target is not in the available genes.")
+ return
+ population = [random_chromosome() for _ in range(pop_size)]
+ generation = 1
+ while True:
+ population.sort(key=calculate_fitness)
+ best = population[0]
+ print(f"Generation {generation}: {''.join(best)} | Fitness: {calculate_fitness(best)}")
+
+ if calculate_fitness(best) == 0:
+ break
+
+ next_generation = population[:10]
+ while len(next_generation) < pop_size:
+ parent1, parent2 = random.choices(population[:50], k=2)
+ next_generation.append(mate(parent1, parent2))
+ population = next_generation
+ generation += 1
+genetic_algorithm()
